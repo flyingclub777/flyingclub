@@ -20,7 +20,12 @@
     --radius-lg:    18px;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; overflow: hidden; }
+  html, body {
+    height: 100%;
+  }
+  @media (min-width: 768px) {
+    html, body { overflow: hidden; }
+  }
   body {
     background: var(--sky-deep);
     color: var(--white);
@@ -47,31 +52,15 @@
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border);
     flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 6px;
   }
+  .nav-logo { display: flex; align-items: center; gap: 10px; }
   .nav-logo-icon {
-  width: 52px;              /* adjust size */
-  height: 52px;             /* adjust size */
-  border-radius: 0;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 2px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.05);
-
-  box-shadow:
-    0 0 12px rgba(77,170,255,0.25),
-    inset 0 0 10px rgba(255,255,255,0.05);
-}
-
-.nav-logo-icon img {
-  width: 52px;
-  height: 52px;
-  object-fit: cover;   /* keeps image properly fitted */
-  border-radius: 0;
-}
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--horizon), var(--accent));
+    display: flex; align-items: center; justify-content: center; font-size: 15px;
+  }
   .nav-title { font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 2px; }
   .nav-year  { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: var(--gold); letter-spacing: 3px; }
 
@@ -100,12 +89,17 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
     padding: 10px 16px 10px;
     max-width: 1060px;
     width: 100%;
     margin: 0 auto;
     min-height: 0;
+  }
+  @media (min-width: 768px) {
+    #main {
+      overflow: hidden;
+    }
   }
 
   /* ─── Month header strip ─── */
@@ -139,19 +133,23 @@
 
   /* ─── Calendar ─── */
   .cal-wrap {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-  flex-shrink: 0;
-  animation: fadein 0.28s ease;
-
-  width: 1020px;      /* increase horizontal size */
-  height: 360px;     /* increase vertical size */
-
-  padding: 20px;
-}
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    animation: fadein 0.28s ease;
+    width: 100%;
+    padding: 10px;
+  }
+  @media (min-width: 768px) {
+    .cal-wrap {
+      width: 1020px;
+      height: 360px;
+      padding: 20px;
+    }
+  }
   .day-headers {
     display: grid; grid-template-columns: repeat(7,1fr);
     border-bottom: 1px solid var(--glass-border);
@@ -201,11 +199,16 @@
     margin-top: 8px;
     backdrop-filter: blur(16px);
     overflow: hidden;
-    flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 0;
     animation: fadein 0.3s ease;
+    min-height: 180px;
+  }
+  @media (min-width: 768px) {
+    .event-panel {
+      flex: 1;
+      min-height: 0;
+    }
   }
   .event-panel-header {
     display: flex; align-items: center; justify-content: space-between;
@@ -220,7 +223,14 @@
   }
   .dot-indicator { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 7px var(--accent); }
 
-  .event-scroll { overflow-y: auto; flex: 1; }
+  .event-scroll {
+    overflow-y: auto;
+    flex: 1;
+    max-height: 260px;
+  }
+  @media (min-width: 768px) {
+    .event-scroll { max-height: none; }
+  }
 
   .event-item {
     display: grid;
@@ -270,13 +280,47 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(77,170,255,0.3); border-radius: 99px; }
 
-  @media (max-width: 560px) {
+  @media (max-width: 767px) {
+    #top-nav {
+      padding: 8px 12px;
+    }
     .nav-title { display: none; }
-    .mpage-name { font-size: 26px; }
-    .bs-num { font-size: 12px; }
+    .nav-logo-icon { width: 28px; height: 28px; font-size: 13px; }
+    .nav-year { font-size: 14px; }
+    .nav-btn { padding: 5px 12px; font-size: 12px; }
+    .nav-month-label { font-size: 15px; min-width: 70px; }
+    .month-switcher { gap: 6px; }
+
+    #main { padding: 8px 10px 16px; }
+
+    .mpage-header { padding: 8px 12px; margin-bottom: 6px; }
+    .mpage-name { font-size: 22px; letter-spacing: 2px; }
+    .mpage-year-lbl { font-size: 16px; }
+    .mpage-season { font-size: 9px; }
+
+    .day-hdr { font-size: 10px; padding: 6px 0; }
+    .day-cell { padding: 5px 1px 4px; min-height: 44px; justify-content: flex-start; }
+    .bs-num { font-size: 13px; }
     .ad-num { font-size: 8px; }
-    .nav-month-label { font-size: 16px; min-width: 80px; }
+    .ev-dot { width: 4px; height: 4px; }
+
+    .event-item { grid-template-columns: 46px 1fr 4px; padding: 10px 12px; gap: 8px; }
     .ev-bs-num { font-size: 20px; }
+    .ev-title { font-size: 12px; }
+    .ev-notes { font-size: 10px; }
+    .ev-badge { font-size: 8px; padding: 2px 6px; }
+
+    .event-panel-title { font-size: 9px; }
+    .legend-row { gap: 8px; padding: 6px 12px; }
+    .legend-item { font-size: 9px; }
+  }
+
+  @media (max-width: 400px) {
+    .mpage-name { font-size: 18px; }
+    .nav-btn { padding: 4px 8px; font-size: 11px; }
+    .nav-month-label { font-size: 13px; min-width: 60px; }
+    .bs-num { font-size: 11px; }
+    .ad-num { font-size: 7px; display: none; }
   }
 </style>
 </head>
@@ -284,9 +328,8 @@
 <div id="sky-bg"></div>
 
 <nav id="top-nav">
-  <div class="nav-logo-icon">
-  <img src="flying.jpg" alt="Logo">
-</div>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">✈</div>
     <span class="nav-title">Flying Club — Pulchowk</span>
   </div>
   <div class="month-switcher">
